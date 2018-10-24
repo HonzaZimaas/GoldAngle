@@ -1,6 +1,6 @@
 package gui;
 
-import service.DrawingService;
+import service.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +8,9 @@ import java.awt.*;
 public class CircleFrame extends JFrame implements Runnable {
     private int height;
     private int width;
+    private Board board;
+    private Settings settings;
+    private boolean running = false;
 
     public CircleFrame(int width, int height, String title) {
         this.width = width;
@@ -35,11 +38,12 @@ public class CircleFrame extends JFrame implements Runnable {
     private void initFrame() {
         JPanel main = new JPanel();
 
-        JPanel board = new Board(width / 5 * 4, height);
+        settings = new Settings(width / 5 * 4, height, 400);
+        board = new Board(settings);
         JPanel panel = new JPanel();
 
 
-        board.setPreferredSize(new Dimension(width / 5 * 4, height));
+        board.setPreferredSize(new Dimension(width / 5 * 4 + 20, height + 50));
 
         // menu
         panel.setBackground(Color.darkGray);
@@ -79,12 +83,13 @@ public class CircleFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        DrawingService.nextPoint();
+        while (running) {
+            board.paintPoint(board.getGraphics());
+        }
     }
 
     private void start() {
-       // DrawingService.drawCircle(this, height, width, 250);
-
+        running = !running;
         Thread thread = new Thread(this, "Creating");
         thread.start();
     }
