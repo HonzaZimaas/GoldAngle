@@ -15,12 +15,15 @@ public class Board extends JPanel {
 
     private Settings settings;
     private BufferedImage bufferedImage;
+    private DrawingService drawingService;
 
 
     public Board(Settings settings) {
         this.width = settings.getWidth() - 30;
         this.height = settings.getHeight() - 50;
         this.settings = settings;
+
+        this.drawingService = new DrawingService(settings);
     }
 
     @Override
@@ -34,8 +37,9 @@ public class Board extends JPanel {
         Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
         cleanBoard(graphics);
 
-        DrawingService.initialCircle(graphics, settings);
-        DrawingService.userCircle(graphics, settings, settings.getRadius());
+
+        drawingService.userCircle(graphics, settings.getRadius());
+        drawingService.userCircle(graphics, 150);
 
         return bufferedImage;
     }
@@ -51,7 +55,11 @@ public class Board extends JPanel {
 //        int y = numberGenerator.getY;
 
         Random random = new Random();
-        DrawingService.nextPoint((Graphics2D) graphics, random.nextInt(1500), random.nextInt(1000), settings,
+        drawingService.createPoint((Graphics2D) graphics, random.nextInt(1500), random.nextInt(1000),
                 bufferedImage);
+    }
+
+    public String updateRation() {
+        return Float.toString(drawingService.getRation());
     }
 }

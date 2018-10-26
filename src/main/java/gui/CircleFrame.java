@@ -85,6 +85,7 @@ public class CircleFrame extends JFrame implements Runnable {
     public void run() {
         while (running) {
             board.paintPoint(board.getGraphics());
+            System.out.println(board.updateRation());
         }
     }
 
