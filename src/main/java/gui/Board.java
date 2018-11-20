@@ -13,16 +13,13 @@ public class Board extends JPanel {
     private int width;
     private int height;
 
-    private Settings settings;
     private BufferedImage bufferedImage;
     private DrawingService drawingService;
 
 
     public Board(Settings settings) {
-        this.width = settings.getWidth() - 30;
-        this.height = settings.getHeight() - 50;
-        this.settings = settings;
-
+        this.width = settings.getWidth() - 25;
+        this.height = settings.getHeight() ;
         this.drawingService = new DrawingService(settings);
     }
 
@@ -37,14 +34,13 @@ public class Board extends JPanel {
         Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
         cleanBoard(graphics);
 
-
-        drawingService.userCircle(graphics, 150);
+        drawingService.userCircle(graphics);
 
         return bufferedImage;
     }
 
     public void cleanBoard(Graphics2D graphics) {
-        DrawingService.cleanEverything(graphics, width, height);
+        drawingService.cleanEverything(graphics, width, height);
     }
 
     public void paintPoint(Graphics graphics) {

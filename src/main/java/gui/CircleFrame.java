@@ -8,8 +8,11 @@ import java.awt.*;
 public class CircleFrame extends JFrame implements Runnable {
     private int height;
     private int width;
+
     private Board board;
-    private Settings settings;
+    private Board board2;
+    private Board board3;
+
     private boolean running = false;
 
     public CircleFrame(int width, int height, String title) {
@@ -36,18 +39,25 @@ public class CircleFrame extends JFrame implements Runnable {
     }
 
     private void initFrame() {
-        JPanel main = new JPanel();
-
-        settings = new Settings(width / 5 * 4, height, 150);
-        board = new Board(settings);
-        JPanel panel = new JPanel();
 
 
-        board.setPreferredSize(new Dimension(width / 5 * 4 + 20, height + 50));
+        Settings boardsSettings = new Settings(width / 4, height / 2, 200);
+        Dimension dimension = new Dimension(width / 4, height / 2 );
+
+
+        board = new Board(boardsSettings);
+        board2 = new Board(boardsSettings);
+        board3 = new Board(boardsSettings);
+
+
+        JPanel userPanel = new JPanel();
+
+        board.setPreferredSize(dimension);
+        board2.setPreferredSize(dimension);
+        board3.setPreferredSize(dimension);
 
         // menu
-        panel.setBackground(Color.darkGray);
-        panel.setPreferredSize(new Dimension(width / 5, height));
+        userPanel.setPreferredSize(new Dimension(width / 4 , height / 2 ));
 
         JPanel right = new JPanel();
         right.setLayout(new GridLayout(20, 0));
@@ -68,16 +78,52 @@ public class CircleFrame extends JFrame implements Runnable {
         left.add(new Label("Value_A"));
         left.add(new Label("Value_Y"));
 
-        panel.setLayout(new GridLayout(0, 2));
+        userPanel.setLayout(new GridLayout(0, 2));
 
-        panel.add(left);
-        panel.add(right);
+        userPanel.add(left);
+        userPanel.add(right);
+
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayout(2,0));
+        panel1.add(board);
+
+        JPanel table1 = new Table(board);
+        table1.setPreferredSize(new Dimension(width / 5, height / 5 ));
+
+        panel1.add(table1);
+        panel1.setBackground(Color.darkGray);
 
 
-        main.setLayout(new BorderLayout());
-        main.add(board, BorderLayout.WEST);
-        main.add(panel, BorderLayout.EAST);
-        main.setBackground(Color.darkGray);
+        /////////////////////////////////
+        JPanel panel2 = new JPanel();
+        panel2.add(board2);
+        panel2.setLayout(new GridLayout(2,0));
+
+        JPanel table2 = new Table(board2);
+        table2.setPreferredSize(new Dimension(width / 5 , height / 5 ));
+        panel2.add(table2);
+        panel2.setBackground(Color.darkGray);
+
+        /////////////////////////////////
+        JPanel panel3 = new JPanel();
+        panel3.add(board3);
+        panel3.setLayout(new GridLayout(2,0));
+
+        JPanel table3 = new Table(board3);
+        table3.setPreferredSize(new Dimension(width / 5, height / 5 ));
+
+        panel3.add(table3);
+        panel3.setBackground(Color.darkGray);
+
+        // MAIN PANEL
+        JPanel main = new JPanel();
+
+        main.setLayout(new GridLayout());
+        main.add(panel1);
+        main.add(panel2);
+        main.add(panel3);
+        main.add(userPanel);
+
         setContentPane(main);
     }
 
@@ -85,6 +131,8 @@ public class CircleFrame extends JFrame implements Runnable {
     public void run() {
         while (running) {
             board.paintPoint(board.getGraphics());
+            board2.paintPoint(board2.getGraphics());
+            board3.paintPoint(board3.getGraphics());
             System.out.println(board.updateRation());
         }
     }

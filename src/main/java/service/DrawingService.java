@@ -25,25 +25,24 @@ public class DrawingService {
 
     public DrawingService(Settings settings) {
         this.settings = settings;
-
         this.widthCenter = settings.getWidth() / 2;
         this.heightCenter = settings.getHeight() / 2;
         this.userRadius = settings.getRadius();
     }
 
-    public void userCircle(Graphics2D graphics, int radius) {
-        if (radius == 0) {
-            radius = settings.getRadius();
-        }
-
-        int diameter = radius * 2;
+    public void userCircle(Graphics2D graphics) {
+        int diameter = userRadius * 2;
+        int innerRadius = userRadius / 4;
 
         // Circle
         graphics.setColor(Color.gray);
-        graphics.fillOval(widthCenter - radius, heightCenter - radius, diameter, diameter);
+        graphics.fillOval(widthCenter - userRadius, heightCenter - userRadius, diameter, diameter);
 
         graphics.setColor(Color.black);
-        graphics.drawOval(widthCenter - radius, heightCenter - radius, diameter, diameter);
+        graphics.drawOval(widthCenter - userRadius, heightCenter - userRadius, diameter, diameter);
+
+        //Inner Circle
+        graphics.drawOval(widthCenter - innerRadius, heightCenter - innerRadius, userRadius / 2, userRadius / 2);
 
         //Center cross
         graphics.setColor(Color.red);
@@ -52,12 +51,12 @@ public class DrawingService {
         graphics.drawLine(widthCenter, heightCenter - CROSS_SIZE, widthCenter, heightCenter + CROSS_SIZE);
 
         //Up line
-        graphics.drawLine(widthCenter, heightCenter, widthCenter, heightCenter - radius);
-        graphics.drawLine(widthCenter + 1, heightCenter, widthCenter + 1, heightCenter - radius);
+        graphics.drawLine(widthCenter, heightCenter, widthCenter, heightCenter - userRadius);
+        graphics.drawLine(widthCenter + 1, heightCenter, widthCenter + 1, heightCenter - userRadius);
 
         //Angle line
-        xPointOnRound = (int) Math.round(((0 * (COS2)) - ((radius) * SIN2)));
-        yPointOnRound = (int) Math.round(((0 * SIN2) + ((radius) * (COS2))));
+        xPointOnRound = (int) Math.round(((0 * (COS2)) - ((userRadius) * SIN2)));
+        yPointOnRound = (int) Math.round(((0 * SIN2) + ((userRadius) * (COS2))));
 
         graphics.drawLine(widthCenter, heightCenter, xPointOnRound + widthCenter, settings.getHeight() - yPointOnRound - heightCenter);
 
@@ -70,8 +69,6 @@ public class DrawingService {
     }
 
     public void createPoint(Graphics2D graphics, int x, int y, BufferedImage bufferedImage) {
-
-
         if (true) {
             if (Math.hypot(widthCenter - x + 10, heightCenter - y + 10) <
                     userRadius) {
@@ -80,6 +77,17 @@ public class DrawingService {
                 graphics.drawRect(x, y, 0, 0);
             }
         }
+    }
+
+    public float getRation() {
+        return counter.getRation();
+    }
+
+
+    public void cleanEverything(Graphics2D graphics, int width, int height) {
+        graphics.setColor(Color.white);
+        graphics.fillRect(0, 0, width, height);
+
     }
 
     private Color getColorByLocations(int x, int y) {
@@ -101,28 +109,17 @@ public class DrawingService {
 
         if (lineConstant == 0) {
             vectorX = settings.getHeight() - yPointOnRound - heightCenter - heightCenter;
-            vectorY = (xPointOnRound ) * -1;
+            vectorY = (xPointOnRound) * -1;
 
             // general line
             lineConstant = ((-vectorX * widthCenter) - vectorY * heightCenter);
         }
 
         int xOnLine = (-vectorY * b) / vectorX - lineConstant / vectorX;
-        return (a - xOnLine) > 0;
+        return (a - xOnLine) > 3;
     }
 
-    public float getRation() {
-        return counter.getRation();
-    }
-
-
-    public static void cleanEverything(Graphics2D graphics, int width, int height) {
-        graphics.setColor(Color.white);
-        graphics.fillRect(0, 0, width, height);
-
-    }
-
-    private static boolean drawingIntoCirce(int x, int y, BufferedImage bufferedImage) {
+    private boolean drawingIntoCirce(int x, int y, BufferedImage bufferedImage) {
         int rbg = 0;
         try {
             rbg = bufferedImage.getRGB(x - 10, y - 10);
