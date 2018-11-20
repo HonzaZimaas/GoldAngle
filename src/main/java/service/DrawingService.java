@@ -72,7 +72,7 @@ public class DrawingService {
     public void createPoint(Graphics2D graphics, int x, int y, BufferedImage bufferedImage) {
 
 
-        if (/*drawingIntoCirce(x, y, bufferedImage)*/ true) {
+        if (true) {
             if (Math.hypot(widthCenter - x + 10, heightCenter - y + 10) <
                     userRadius) {
                 graphics.setColor(getColorByLocations(x, y));
@@ -100,8 +100,8 @@ public class DrawingService {
     private boolean findingTheCorner(int a, int b) {
 
         if (lineConstant == 0) {
-            vectorX = yPointOnRound - heightCenter;
-            vectorY = (xPointOnRound - widthCenter) * -1;
+            vectorX = settings.getHeight() - yPointOnRound - heightCenter - heightCenter;
+            vectorY = (xPointOnRound ) * -1;
 
             // general line
             lineConstant = ((-vectorX * widthCenter) - vectorY * heightCenter);

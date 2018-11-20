@@ -38,7 +38,7 @@ public class CircleFrame extends JFrame implements Runnable {
     private void initFrame() {
         JPanel main = new JPanel();
 
-        settings = new Settings(width / 5 * 4, height, 400);
+        settings = new Settings(width / 5 * 4, height, 150);
         board = new Board(settings);
         JPanel panel = new JPanel();
 

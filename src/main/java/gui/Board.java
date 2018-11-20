@@ -38,7 +38,6 @@ public class Board extends JPanel {
         cleanBoard(graphics);
 
 
-        drawingService.userCircle(graphics, settings.getRadius());
         drawingService.userCircle(graphics, 150);
 
         return bufferedImage;
