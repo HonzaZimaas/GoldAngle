@@ -14,6 +14,10 @@ public class MainFrame extends JFrame implements Runnable {
     private Board board2;
     private Board board3;
 
+    private Table table1;
+    private Table table2;
+    private Table table3;
+
     private boolean running = false;
 
     public MainFrame(int width, int height, String title) {
@@ -30,9 +34,7 @@ public class MainFrame extends JFrame implements Runnable {
         SwingUtilities.invokeLater(() -> {
             SwingUtilities.invokeLater(() -> {
                 SwingUtilities.invokeLater(() -> {
-                    SwingUtilities.invokeLater(() -> {
-                        initFrame();
-                    });
+                    SwingUtilities.invokeLater(this::initFrame);
                 });
             });
         });
@@ -58,33 +60,31 @@ public class MainFrame extends JFrame implements Runnable {
         JPanel right = new JPanel();
         right.setLayout(new GridLayout(20, 0));
 
-        right.add(new JTextField());
-        right.add(new JTextField());
-        right.add(new JTextField());
+        right.add(new Label());
 
         JButton run = new JButton("Start");
         run.addActionListener(e -> start());
         right.add(run);
 
+
         JButton stop = new JButton("Stop");
         stop.addActionListener(e -> stop());
         right.add(stop);
+
 
         JButton clean = new JButton("Clean");
         clean.addActionListener(e -> clean());
         right.add(clean);
 
+        right.add(new Label());
+        right.add(new Label());
 
+        userPanel.setLayout(new GridLayout(0, 3));
+
+        //The plonk panel
         JPanel left = new JPanel();
-        left.setLayout(new GridLayout(20, 0));
-
-        left.add(new Label("Value_X"));
-        left.add(new Label("Value_A"));
-        left.add(new Label("Value_Y"));
-
-        userPanel.setLayout(new GridLayout(0, 2));
-
         userPanel.add(left);
+
         userPanel.add(right);
 
 
@@ -94,7 +94,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel1.setLayout(new GridLayout(2, 0));
         panel1.add(board);
 
-        JPanel table1 = new Table(board);
+        table1 = new Table(board);
         table1.setPreferredSize(new Dimension(width / 5, height / 5));
 
         panel1.add(table1);
@@ -106,7 +106,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel2.add(board2);
         panel2.setLayout(new GridLayout(2, 0));
 
-        JPanel table2 = new Table(board2);
+        table2 = new Table(board2);
         table2.setPreferredSize(new Dimension(width / 5, height / 5));
         panel2.add(table2);
         panel2.setBackground(Color.darkGray);
@@ -117,7 +117,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel3.add(board3);
         panel3.setLayout(new GridLayout(2, 0));
 
-        JPanel table3 = new Table(board3);
+        table3 = new Table(board3);
         table3.setPreferredSize(new Dimension(width / 5, height / 5));
 
         panel3.add(table3);
@@ -141,6 +141,8 @@ public class MainFrame extends JFrame implements Runnable {
             board.paintPoint(board.getGraphics());
             board2.paintPoint(board2.getGraphics());
             board3.paintPoint(board3.getGraphics());
+
+            updateTables();
         }
     }
 
@@ -156,9 +158,19 @@ public class MainFrame extends JFrame implements Runnable {
         board.cleanBoard(board.getGraphics());
         board2.cleanBoard(board2.getGraphics());
         board3.cleanBoard(board3.getGraphics());
+
+        table1.cleanTableValue();
+        table2.cleanTableValue();
+        table3.cleanTableValue();
     }
 
     private void stop() {
         running = false;
+    }
+
+    private void updateTables() {
+        table1.updateTable();
+        table2.updateTable();
+        table3.updateTable();
     }
 }

@@ -1,15 +1,12 @@
 package service;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class DrawingService {
     private static final int CROSS_SIZE = 10;
     private static final double GOLD_ANGLE = 137.51;
     private static final double COS2 = -Math.cos(GOLD_ANGLE);
     private static final double SIN2 = Math.sin(GOLD_ANGLE);
-
-    private Settings settings;
 
     private int widthCenter;
     private int heightCenter;
@@ -23,6 +20,8 @@ public class DrawingService {
 
     private Color color1;
     private Color color2;
+
+    private Settings settings;
 
     private Counter counter = new Counter();
 
@@ -81,12 +80,8 @@ public class DrawingService {
 
             graphics.drawRect(x, y, 0, 0);
         }
-    }
 
-    public float getRation() {
-        return counter.getRation();
     }
-
 
     public void cleanEverything(Graphics2D graphics) {
         graphics.setColor(Color.white);
@@ -96,16 +91,16 @@ public class DrawingService {
 
     private Color getColorByLocations(int x, int y) {
         if ((widthCenter < x - 10) && (y - 10 <= heightCenter)) {
-            counter.setCountGreen(counter.getCountGreen() + 1);
+            counter.setCountB(counter.getCountB() + 1);
             return color2;
         }
         if ((y - 10 > heightCenter)) {
             if (findingTheCorner(x, y)) {
-                counter.setCountGreen(counter.getCountGreen() + 1);
+                counter.setCountB(counter.getCountB() + 1);
                 return color2;
             }
         }
-        counter.setCountBlue(counter.getCountBlue() + 1);
+        counter.setCountA(counter.getCountA() + 1);
         return color1;
     }
 
@@ -121,16 +116,6 @@ public class DrawingService {
 
         int xOnLine = (-vectorY * b) / vectorX - lineConstant / vectorX;
         return (a - xOnLine) > 3;
-    }
-
-    private boolean drawingIntoCirce(int x, int y, BufferedImage bufferedImage) {
-        int rbg = 0;
-        try {
-            rbg = bufferedImage.getRGB(x - 10, y - 10);
-        } catch (IndexOutOfBoundsException ignored) {
-            System.out.println("Generated point is out of image");
-        }
-        return rbg != Color.red.getRGB() && rbg != Color.black.getRGB();
     }
 
     private void chooseColorSchema(GeneratorType type) {
@@ -150,5 +135,13 @@ public class DrawingService {
             default:
                 throw new IllegalStateException(type.toString());
         }
+    }
+
+    public Counter getCounter() {
+        return counter;
+    }
+
+    public void setCounter(Counter counter) {
+        this.counter = counter;
     }
 }

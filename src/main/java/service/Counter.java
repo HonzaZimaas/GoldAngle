@@ -1,34 +1,42 @@
 package service;
 
 public class Counter {
+    private static final double GOLD_CUT = 1.61803;
+    private int countA = 0;
+    private int countB = 0;
 
-    private float countBlue = 0;
-    private float countGreen = 0;
-
-
-    public float getCountBlue() {
-        return countBlue;
+    public int getCountA() {
+        return countA;
     }
 
-    public void setCountBlue(float countBlue) {
-        this.countBlue = countBlue;
+    public void setCountA(int countA) {
+        this.countA = countA;
     }
 
-    public float getCountGreen() {
-        return countGreen;
+    public int getCountB() {
+        return countB;
     }
 
-    public void setCountGreen(float countGreen) {
-        this.countGreen = countGreen;
+    public void setCountB(int countB) {
+        this.countB = countB;
     }
 
-    public float getRation() {
-        float ration = 0;
+    public double getRation() {
+        double ration = 0;
         try {
-            ration = countBlue / countGreen ;
+            ration = (double) countA / countB;
         } catch (ArithmeticException ignoreThat) {
             System.out.println("It is not possible ");
         }
-        return ration;
+        return (double) Math.round(ration * 100000) / 100000;
+    }
+
+    public int getTotal() {
+        return getCountA() + getCountB();
+    }
+
+    public double getVariance() {
+        double variance = Math.abs(GOLD_CUT - getRation());
+        return (double) Math.round(variance * 100000) / 100000;
     }
 }

@@ -1,5 +1,6 @@
 package gui;
 
+import service.Counter;
 import service.DrawingService;
 import service.GeneratorType;
 import service.Settings;
@@ -14,7 +15,6 @@ public class Board extends JPanel {
     private int width;
     private int height;
 
-    private BufferedImage bufferedImage;
     private DrawingService drawingService;
     private GeneratorType type;
 
@@ -33,7 +33,7 @@ public class Board extends JPanel {
     }
 
     private Image createImageInitialImage() {
-        bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
 
         drawingService.cleanEverything(graphics);
@@ -42,7 +42,7 @@ public class Board extends JPanel {
         return bufferedImage;
     }
 
-    public void cleanBoard(Graphics graphics) {
+    void cleanBoard(Graphics graphics) {
         createImageInitialImage();
         paint(graphics);
     }
@@ -54,10 +54,36 @@ public class Board extends JPanel {
 //        int y = numberGenerator.getY;
 
         Random random = new Random();
-        drawingService.createPoint((Graphics2D) graphics, random.nextInt(1500), random.nextInt(1000));
+        drawingService.createPoint((Graphics2D) graphics, random.nextInt(500), random.nextInt(500));
     }
 
-    public String updateRation() {
-        return Float.toString(drawingService.getRation());
+    public String getRation() {
+        return Double.toString(drawingService.getCounter().getRation());
     }
+
+    public String getCountA() {
+        return Integer.toString(drawingService.getCounter().getCountA());
+    }
+
+    public String getCountB() {
+        return Integer.toString(drawingService.getCounter().getCountB());
+    }
+
+    public String getTotal() {
+        return Integer.toString(drawingService.getCounter().getTotal());
+    }
+
+    public String getVariance() {
+        return Double.toString(drawingService.getCounter().getVariance());
+    }
+
+    public GeneratorType getGeneratorType() {
+        return type;
+    }
+
+    public void resetCounter() {
+        drawingService.setCounter(new Counter());
+    }
+
+
 }
