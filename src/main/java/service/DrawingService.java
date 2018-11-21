@@ -21,16 +21,22 @@ public class DrawingService {
     private int vectorX;
     private int vectorY;
 
+    private Color color1;
+    private Color color2;
+
     private Counter counter = new Counter();
 
-    public DrawingService(Settings settings) {
+    public DrawingService(Settings settings, GeneratorType type) {
         this.settings = settings;
         this.widthCenter = settings.getWidth() / 2;
         this.heightCenter = settings.getHeight() / 2;
         this.userRadius = settings.getRadius();
+
+        chooseColorSchema(type);
     }
 
     public void userCircle(Graphics2D graphics) {
+
         int diameter = userRadius * 2;
         int innerRadius = userRadius / 4;
 
@@ -68,14 +74,12 @@ public class DrawingService {
         graphics.setColor(Color.black);
     }
 
-    public void createPoint(Graphics2D graphics, int x, int y, BufferedImage bufferedImage) {
-        if (true) {
-            if (Math.hypot(widthCenter - x + 10, heightCenter - y + 10) <
-                    userRadius) {
-                graphics.setColor(getColorByLocations(x, y));
+    public void createPoint(Graphics2D graphics, int x, int y) {
+        if (Math.hypot(widthCenter - x + 10, heightCenter - y + 10) <
+                userRadius) {
+            graphics.setColor(getColorByLocations(x, y));
 
-                graphics.drawRect(x, y, 0, 0);
-            }
+            graphics.drawRect(x, y, 0, 0);
         }
     }
 
@@ -84,25 +88,25 @@ public class DrawingService {
     }
 
 
-    public void cleanEverything(Graphics2D graphics, int width, int height) {
+    public void cleanEverything(Graphics2D graphics) {
         graphics.setColor(Color.white);
-        graphics.fillRect(0, 0, width, height);
+        graphics.fillRect(0, 0, settings.getWidth(), settings.getHeight());
 
     }
 
     private Color getColorByLocations(int x, int y) {
         if ((widthCenter < x - 10) && (y - 10 <= heightCenter)) {
             counter.setCountGreen(counter.getCountGreen() + 1);
-            return Color.green;
+            return color2;
         }
         if ((y - 10 > heightCenter)) {
             if (findingTheCorner(x, y)) {
                 counter.setCountGreen(counter.getCountGreen() + 1);
-                return Color.green;
+                return color2;
             }
         }
         counter.setCountBlue(counter.getCountBlue() + 1);
-        return Color.blue;
+        return color1;
     }
 
     private boolean findingTheCorner(int a, int b) {
@@ -129,4 +133,22 @@ public class DrawingService {
         return rbg != Color.red.getRGB() && rbg != Color.black.getRGB();
     }
 
+    private void chooseColorSchema(GeneratorType type) {
+        switch (type) {
+            case PRVNI:
+                color1 = Color.blue;
+                color2 = Color.green;
+                break;
+            case DRUHY:
+                color1 = Color.magenta;
+                color2 = Color.red;
+                break;
+            case TRETI:
+                color1 = Color.cyan;
+                color2 = Color.orange;
+                break;
+            default:
+                throw new IllegalStateException(type.toString());
+        }
+    }
 }
