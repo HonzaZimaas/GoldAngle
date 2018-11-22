@@ -80,7 +80,6 @@ public class DrawingService {
 
             graphics.drawRect(x, y, 0, 0);
         }
-
     }
 
     public void cleanEverything(Graphics2D graphics) {
@@ -124,11 +123,11 @@ public class DrawingService {
                 color1 = Color.blue;
                 color2 = Color.green;
                 break;
-            case DRUHY:
+            case PRN_GINE:
                 color1 = Color.magenta;
                 color2 = Color.red;
                 break;
-            case TRETI:
+            case JAVA_RANDOM:
                 color1 = Color.cyan;
                 color2 = Color.orange;
                 break;
@@ -144,4 +143,6 @@ public class DrawingService {
     public void setCounter(Counter counter) {
         this.counter = counter;
     }
+
+
 }

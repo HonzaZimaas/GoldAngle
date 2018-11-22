@@ -1,14 +1,10 @@
 package gui;
 
-import service.Counter;
-import service.DrawingService;
-import service.GeneratorType;
-import service.Settings;
+import service.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 
 public class Board extends JPanel {
@@ -16,14 +12,18 @@ public class Board extends JPanel {
     private int height;
 
     private DrawingService drawingService;
+    private NumberGenerator numberGenerator;
     private GeneratorType type;
 
 
     public Board(Settings settings, GeneratorType type) {
         this.width = settings.getWidth() - 25;
         this.height = settings.getHeight();
-        this.drawingService = new DrawingService(settings, type);
+
         this.type = type;
+
+        this.drawingService = new DrawingService(settings, type);
+        this.numberGenerator = new NumberGenerator(type);
     }
 
     @Override
@@ -49,12 +49,11 @@ public class Board extends JPanel {
 
     public void paintPoint(Graphics graphics) {
 
-//        NumberGenerator numberGenerator = new NumberGenerator();
-//        int x = numberGenerator.getX;
-//        int y = numberGenerator.getY;
+        int x = numberGenerator.nextNumber(500);
+        int y = numberGenerator.nextNumber(500);
 
-        Random random = new Random();
-        drawingService.createPoint((Graphics2D) graphics, random.nextInt(500), random.nextInt(500));
+
+        drawingService.createPoint((Graphics2D) graphics, x, y);
     }
 
     public String getRation() {

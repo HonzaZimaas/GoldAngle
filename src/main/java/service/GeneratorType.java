@@ -2,8 +2,8 @@ package service;
 
 public enum GeneratorType {
     PRVNI("Generator ISSE"),
-    DRUHY("Generator PRII"),
-    TRETI("Generator Math");
+    PRN_GINE("Generator PRNGine"),
+    JAVA_RANDOM("Generator Random");
 
     private String generatorName;
 

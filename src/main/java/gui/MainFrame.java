@@ -18,7 +18,10 @@ public class MainFrame extends JFrame implements Runnable {
     private Table table2;
     private Table table3;
 
+    private JTextField fieldCountOfIteration;
+
     private boolean running = false;
+    private int countOfIteration = 1000000000;
 
     public MainFrame(int width, int height, String title) {
         this.width = width;
@@ -34,7 +37,11 @@ public class MainFrame extends JFrame implements Runnable {
         SwingUtilities.invokeLater(() -> {
             SwingUtilities.invokeLater(() -> {
                 SwingUtilities.invokeLater(() -> {
-                    SwingUtilities.invokeLater(this::initFrame);
+                    SwingUtilities.invokeLater(() -> {
+                        SwingUtilities.invokeLater(() -> {
+                            SwingUtilities.invokeLater(this::initFrame);
+                        });
+                    });
                 });
             });
         });
@@ -46,8 +53,8 @@ public class MainFrame extends JFrame implements Runnable {
         Dimension dimension = new Dimension(width / 4, height / 2);
 
         board = new Board(boardsSettings, GeneratorType.PRVNI);
-        board2 = new Board(boardsSettings, GeneratorType.DRUHY);
-        board3 = new Board(boardsSettings, GeneratorType.TRETI);
+        board2 = new Board(boardsSettings, GeneratorType.PRN_GINE);
+        board3 = new Board(boardsSettings, GeneratorType.JAVA_RANDOM);
 
         board.setPreferredSize(dimension);
         board2.setPreferredSize(dimension);
@@ -59,6 +66,15 @@ public class MainFrame extends JFrame implements Runnable {
 
         JPanel right = new JPanel();
         right.setLayout(new GridLayout(20, 0));
+
+        right.add(new Label());
+
+        fieldCountOfIteration = new JTextField();
+        right.add(fieldCountOfIteration);
+
+        JButton countOfIteration = new JButton("Set Iteration level");
+        countOfIteration.addActionListener(e -> setIteration());
+        right.add(countOfIteration);
 
         right.add(new Label());
 
@@ -137,12 +153,14 @@ public class MainFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while (running) {
+        int iteration = 0;
+        while (running && iteration < countOfIteration) {
             board.paintPoint(board.getGraphics());
             board2.paintPoint(board2.getGraphics());
             board3.paintPoint(board3.getGraphics());
 
             updateTables();
+            iteration++;
         }
     }
 
@@ -172,5 +190,9 @@ public class MainFrame extends JFrame implements Runnable {
         table1.updateTable();
         table2.updateTable();
         table3.updateTable();
+    }
+
+    private void setIteration() {
+        countOfIteration = Integer.parseInt(fieldCountOfIteration.getText());
     }
 }
