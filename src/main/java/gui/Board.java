@@ -5,25 +5,26 @@ import service.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 
 public class Board extends JPanel {
     private int width;
     private int height;
 
+    private HashMap<Integer, int[]> mapOfPointInCircle;
     private DrawingService drawingService;
     private NumberGenerator numberGenerator;
-    private GeneratorType type;
+    private GeneratorType generatorType;
 
 
-    public Board(Settings settings, GeneratorType type) {
+    public Board(Settings settings, GeneratorType generatorType) {
         this.width = settings.getWidth() - 25;
         this.height = settings.getHeight();
-
-        this.type = type;
-
-        this.drawingService = new DrawingService(settings, type);
-        this.numberGenerator = new NumberGenerator(type);
+        this.generatorType = generatorType;
+        this.drawingService = new DrawingService(settings, generatorType);
+        this.numberGenerator = new NumberGenerator(generatorType);
+        this.mapOfPointInCircle = getPointsInRange(settings);
     }
 
     @Override
@@ -32,26 +33,17 @@ public class Board extends JPanel {
         graphics.drawImage(img, 10, 10, this);
     }
 
-    private Image createImageInitialImage() {
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
 
-        drawingService.cleanEverything(graphics);
-        drawingService.userCircle(graphics);
-
-        return bufferedImage;
-    }
-
-    void cleanBoard(Graphics graphics) {
+    public void cleanBoard(Graphics graphics) {
         createImageInitialImage();
         paint(graphics);
     }
 
     public void paintPoint(Graphics graphics) {
+        int key = numberGenerator.nextNumber(mapOfPointInCircle.size());
 
-        int x = numberGenerator.nextNumber(500);
-        int y = numberGenerator.nextNumber(500);
-
+        int x = mapOfPointInCircle.get(key)[0];
+        int y = mapOfPointInCircle.get(key)[1];
 
         drawingService.createPoint((Graphics2D) graphics, x, y);
     }
@@ -77,12 +69,38 @@ public class Board extends JPanel {
     }
 
     public GeneratorType getGeneratorType() {
-        return type;
+        return generatorType;
     }
 
     public void resetCounter() {
         drawingService.setCounter(new Counter());
     }
 
+    private Image createImageInitialImage() {
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
 
+        drawingService.cleanEverything(graphics);
+        drawingService.userCircle(graphics);
+
+        return bufferedImage;
+    }
+
+    private HashMap<Integer, int[]> getPointsInRange(Settings settings) {
+        mapOfPointInCircle = new HashMap<>();
+        int centerX = settings.getWidth() / 2;
+        int heightY = settings.getHeight() / 2;
+        int h = 0;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if ((Math.hypot(centerX - i + 10, heightY - j + 10) < settings.getRadius())) {
+                    int[] xy = {i, j};
+                    mapOfPointInCircle.put(h, xy);
+                    h++;
+                }
+            }
+        }
+        return mapOfPointInCircle;
+    }
 }

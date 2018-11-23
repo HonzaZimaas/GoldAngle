@@ -74,12 +74,8 @@ public class DrawingService {
     }
 
     public void createPoint(Graphics2D graphics, int x, int y) {
-        if (Math.hypot(widthCenter - x + 10, heightCenter - y + 10) <
-                userRadius) {
-            graphics.setColor(getColorByLocations(x, y));
-
-            graphics.drawRect(x, y, 0, 0);
-        }
+        graphics.setColor(getColorByLocations(x, y));
+        graphics.drawRect(x, y, 0, 0);
     }
 
     public void cleanEverything(Graphics2D graphics) {

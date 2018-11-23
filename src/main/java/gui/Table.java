@@ -76,7 +76,7 @@ class Table extends JPanel {
 
         //LABELS POSITION
 
-        layout.putConstraint(SpringLayout.WEST, generatorName, 150, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.WEST, generatorName, 100, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, generatorName, 50, SpringLayout.NORTH, this);
 
         layout.putConstraint(SpringLayout.WEST, countOfPointsA, 50, SpringLayout.WEST, this);
