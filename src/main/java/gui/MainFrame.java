@@ -52,9 +52,9 @@ public class MainFrame extends JFrame implements Runnable {
         Settings boardsSettings = new Settings(width / 4, height / 2, 200);
         Dimension dimension = new Dimension(width / 4, height / 2);
 
-        board = new Board(boardsSettings, GeneratorType.PRVNI);
-        board2 = new Board(boardsSettings, GeneratorType.PRN_GINE);
-        board3 = new Board(boardsSettings, GeneratorType.JAVA_RANDOM);
+        board = new Board(boardsSettings, GeneratorType.XORSHIFT);
+        board2 = new Board(boardsSettings, GeneratorType.LCGSHIFT);
+        board3 = new Board(boardsSettings, GeneratorType.MT19937);
 
         board.setPreferredSize(dimension);
         board2.setPreferredSize(dimension);

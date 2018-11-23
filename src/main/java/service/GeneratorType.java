@@ -1,9 +1,9 @@
 package service;
 
 public enum GeneratorType {
-    PRVNI("Generator ISSE"),
-    PRN_GINE("Generator PRNGine"),
-    JAVA_RANDOM("Generator Random");
+    XORSHIFT("Generator XORSHIFT"),
+    LCGSHIFT("Generator LCGSHIFT"),
+    MT19937("Generator MT19937");
 
     private String generatorName;
 

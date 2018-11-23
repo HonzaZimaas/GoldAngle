@@ -119,15 +119,15 @@ public class DrawingService {
 
     private void chooseColorSchema(GeneratorType type) {
         switch (type) {
-            case PRVNI:
+            case XORSHIFT:
                 color1 = Color.blue;
                 color2 = Color.green;
                 break;
-            case PRN_GINE:
+            case LCGSHIFT:
                 color1 = Color.magenta;
                 color2 = Color.red;
                 break;
-            case JAVA_RANDOM:
+            case MT19937:
                 color1 = Color.cyan;
                 color2 = Color.orange;
                 break;
