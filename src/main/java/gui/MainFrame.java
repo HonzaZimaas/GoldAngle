@@ -67,12 +67,14 @@ public class MainFrame extends JFrame implements Runnable {
         JPanel userPanel = new JPanel();
         userPanel.setPreferredSize(new Dimension(width / 4, height / 2));
 
+        JPanel userTopPanel = new JPanel();
+        userTopPanel.setLayout(new GridLayout(0, 3));
 
         LineBorder lineBorder = new LineBorder(Color.darkGray, 10);
         userPanel.setBorder(lineBorder);
 
         JPanel right = new JPanel();
-        right.setLayout(new GridLayout(20, 0));
+        right.setLayout(new GridLayout(10, 0));
 
         right.add(new Label());
 
@@ -108,13 +110,18 @@ public class MainFrame extends JFrame implements Runnable {
         right.add(new Label());
         right.add(new Label());
 
-        userPanel.setLayout(new GridLayout(0, 3));
+        userPanel.setLayout(new GridLayout(2, 0));
+        userPanel.add(userTopPanel);
+
+        JPanel userTextPanel = new JPanel();
+        /// TEXT?
+        userPanel.add(userTextPanel);
 
         //The plonk panel
         JPanel left = new JPanel();
-        userPanel.add(left);
+        userTopPanel.add(left);
 
-        userPanel.add(right);
+        userTopPanel.add(right);
 
 
         // TABLES

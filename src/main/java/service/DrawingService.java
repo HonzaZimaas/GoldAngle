@@ -137,7 +137,8 @@ public class DrawingService {
     }
 
     public void backupPoints(Graphics2D graphics) {
-        for (Points p : points) {
+        List<Points> backupList = new ArrayList<>(points);
+        for (Points p : backupList) {
             try {
                 graphics.setColor(p.color);
                 graphics.drawRect(p.getX(), p.getY(), 0, 0);
