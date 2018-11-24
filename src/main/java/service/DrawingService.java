@@ -46,9 +46,6 @@ public class DrawingService {
         graphics.setColor(Color.black);
         graphics.drawOval(widthCenter - userRadius, heightCenter - userRadius, diameter, diameter);
 
-        //Inner Circle
-        graphics.drawOval(widthCenter - innerRadius, heightCenter - innerRadius, userRadius / 2, userRadius / 2);
-
         //Center cross
         graphics.setColor(Color.red);
 

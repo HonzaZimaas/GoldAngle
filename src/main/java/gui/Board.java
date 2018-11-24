@@ -49,7 +49,7 @@ public class Board extends JPanel {
     }
 
     public String getRation() {
-        return Double.toString(drawingService.getCounter().getRation());
+        return String.format("%.5f", drawingService.getCounter().getRation());
     }
 
     public String getCountA() {
@@ -65,7 +65,7 @@ public class Board extends JPanel {
     }
 
     public String getVariance() {
-        return Double.toString(drawingService.getCounter().getVariance());
+        return String.format("%.5f", drawingService.getCounter().getVariance());
     }
 
     public GeneratorType getGeneratorType() {

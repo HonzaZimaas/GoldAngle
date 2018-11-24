@@ -32,23 +32,27 @@ class Table extends JPanel {
         generatorName.setFont(headLineFont);
         add(generatorName);
 
-        JLabel countOfPointsA = new JLabel("Počet bodů A");
+        JLabel countOfPointsA = new JLabel("Počet bodů A:");
         countOfPointsA.setFont(labelText);
         add(countOfPointsA);
 
-        JLabel countOfPointsB = new JLabel("Počet bodů B");
+        JLabel countOfPointsB = new JLabel("Počet bodů B:");
         countOfPointsB.setFont(labelText);
         add(countOfPointsB);
 
-        JLabel totalPoints = new JLabel("Počet bodů celkem");
+        JLabel totalPoints = new JLabel("Počet bodů celkem:");
         totalPoints.setFont(labelText);
         add(totalPoints);
 
-        JLabel ration = new JLabel("Poměr bodů");
+        JLabel def = new JLabel("Zlatý řez:");
+        def.setFont(labelText);
+        add(def);
+
+        JLabel ration = new JLabel("Poměr bodů A : B");
         ration.setFont(labelText);
         add(ration);
 
-        JLabel variance = new JLabel("Odchylka");
+        JLabel variance = new JLabel("Odchylka:");
         variance.setFont(labelText);
         add(variance);
 
@@ -65,6 +69,10 @@ class Table extends JPanel {
         lvTotal = new JLabel("0");
         lvTotal.setFont(labelText);
         add(lvTotal);
+
+        JLabel lvDef = new JLabel(board.getVariance());
+        lvDef.setFont(labelText);
+        add(lvDef);
 
         lvRation = new JLabel("0");
         lvRation.setFont(labelText);
@@ -88,8 +96,11 @@ class Table extends JPanel {
         layout.putConstraint(SpringLayout.WEST, totalPoints, 50, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, totalPoints, 20, SpringLayout.SOUTH, countOfPointsB);
 
+        layout.putConstraint(SpringLayout.WEST, def, 50, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, def, 20, SpringLayout.SOUTH, totalPoints);
+
         layout.putConstraint(SpringLayout.WEST, ration, 50, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, ration, 20, SpringLayout.SOUTH, totalPoints);
+        layout.putConstraint(SpringLayout.NORTH, ration, 20, SpringLayout.SOUTH, def);
 
         layout.putConstraint(SpringLayout.WEST, variance, 50, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, variance, 20, SpringLayout.SOUTH, ration);
@@ -105,8 +116,11 @@ class Table extends JPanel {
         layout.putConstraint(SpringLayout.WEST, lvTotal, 200, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, lvTotal, 20, SpringLayout.SOUTH, lvCountB);
 
+        layout.putConstraint(SpringLayout.WEST, lvDef, 200, SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, lvDef, 20, SpringLayout.SOUTH, lvTotal);
+
         layout.putConstraint(SpringLayout.WEST, lvRation, 200, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, lvRation, 20, SpringLayout.SOUTH, lvTotal);
+        layout.putConstraint(SpringLayout.NORTH, lvRation, 20, SpringLayout.SOUTH, lvDef);
 
         layout.putConstraint(SpringLayout.WEST, lvVariance, 200, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, lvVariance, 20, SpringLayout.SOUTH, lvRation);
