@@ -19,7 +19,7 @@ public class Board extends JPanel {
 
 
     public Board(Settings settings, GeneratorType generatorType) {
-        this.width = settings.getWidth() - 25;
+        this.width = settings.getWidth();
         this.height = settings.getHeight();
         this.generatorType = generatorType;
         this.drawingService = new DrawingService(settings, generatorType);
@@ -74,6 +74,14 @@ public class Board extends JPanel {
 
     public void resetCounter() {
         drawingService.setCounter(new Counter());
+    }
+
+    public Color getColorA() {
+        return drawingService.getColor1();
+    }
+
+    public Color getColorB() {
+        return drawingService.getColor2();
     }
 
     private Image createImageInitialImage() {

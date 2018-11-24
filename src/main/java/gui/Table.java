@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 class Table extends JPanel {
@@ -13,20 +12,24 @@ class Table extends JPanel {
     private JLabel lvRation;
     private JLabel lvVariance;
 
+    private Color colorA;
+    private Color colorB;
+
 
     Table(Board board) {
         this.board = board;
+        this.colorA = board.getColorA();
+        this.colorB = board.getColorB();
 
         //LABELS
-
-        LineBorder lineBorder = new LineBorder(Color.darkGray, 15);
-        setBorder(lineBorder);
+        setBorder(BorderFactory.createMatteBorder(10, 10, 10, 0, Color.darkGray));
 
         SpringLayout layout = new SpringLayout();
         setLayout(layout);
 
         Font headLineFont = new Font("Arial", Font.BOLD, 25);
         Font labelText = new Font("Arial", Font.PLAIN, 15);
+        Font varianceText = new Font("Arial", Font.BOLD, 18);
 
         JLabel generatorName = new JLabel(board.getGeneratorType().getGeneratorName());
         generatorName.setFont(headLineFont);
@@ -34,10 +37,12 @@ class Table extends JPanel {
 
         JLabel countOfPointsA = new JLabel("Počet bodů A:");
         countOfPointsA.setFont(labelText);
+        countOfPointsA.setForeground(colorA);
         add(countOfPointsA);
 
         JLabel countOfPointsB = new JLabel("Počet bodů B:");
         countOfPointsB.setFont(labelText);
+        countOfPointsB.setForeground(colorB);
         add(countOfPointsB);
 
         JLabel totalPoints = new JLabel("Počet bodů celkem:");
@@ -48,22 +53,24 @@ class Table extends JPanel {
         def.setFont(labelText);
         add(def);
 
-        JLabel ration = new JLabel("Poměr bodů A : B");
+        JLabel ration = new JLabel("Poměr bodů A : B:");
         ration.setFont(labelText);
         add(ration);
 
         JLabel variance = new JLabel("Odchylka:");
-        variance.setFont(labelText);
+        variance.setFont(varianceText);
         add(variance);
 
         /// LABELS VALUE
 
         lvCountA = new JLabel("0");
         lvCountA.setFont(labelText);
+        lvCountA.setForeground(colorA);
         add(lvCountA);
 
         lvCountB = new JLabel("0");
         lvCountB.setFont(labelText);
+        lvCountB.setForeground(colorB);
         add(lvCountB);
 
         lvTotal = new JLabel("0");
@@ -79,7 +86,7 @@ class Table extends JPanel {
         add(lvRation);
 
         lvVariance = new JLabel(board.getVariance());
-        lvVariance.setFont(labelText);
+        lvVariance.setFont(varianceText);
         add(lvVariance);
 
         //LABELS POSITION

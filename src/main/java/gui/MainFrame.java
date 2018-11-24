@@ -4,6 +4,7 @@ import service.GeneratorType;
 import service.Settings;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class MainFrame extends JFrame implements Runnable {
@@ -49,8 +50,8 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     private void initFrame() {
-        Settings boardsSettings = new Settings(width / 4, height / 2, 200);
-        Dimension dimension = new Dimension(width / 4, height / 2);
+        Settings boardsSettings = new Settings(width / 4 -10, height / 2 - 30, 200);
+        Dimension dimension = new Dimension(width / 4 - 10, height / 2 - 30);
 
         board = new Board(boardsSettings, GeneratorType.XORSHIFT);
         board2 = new Board(boardsSettings, GeneratorType.LCGSHIFT);
@@ -62,7 +63,11 @@ public class MainFrame extends JFrame implements Runnable {
 
         // menu
         JPanel userPanel = new JPanel();
-        userPanel.setPreferredSize(new Dimension(width / 4, height / 2));
+        userPanel.setPreferredSize(new Dimension(width / 4 , height / 2));
+
+
+        LineBorder lineBorder = new LineBorder(Color.darkGray, 10);
+        userPanel.setBorder(lineBorder);
 
         JPanel right = new JPanel();
         right.setLayout(new GridLayout(20, 0));
@@ -105,13 +110,14 @@ public class MainFrame extends JFrame implements Runnable {
 
 
         // TABLES
+        Dimension tableDimension1 = new Dimension(width / 4 - 10, height / 2);
 
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(2, 0));
         panel1.add(board);
 
         table1 = new Table(board);
-        table1.setPreferredSize(new Dimension(width / 5, height / 5));
+        table1.setPreferredSize(tableDimension1);
 
         panel1.add(table1);
         panel1.setBackground(Color.darkGray);
@@ -123,7 +129,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel2.setLayout(new GridLayout(2, 0));
 
         table2 = new Table(board2);
-        table2.setPreferredSize(new Dimension(width / 5, height / 5));
+        table2.setPreferredSize(tableDimension1);
         panel2.add(table2);
         panel2.setBackground(Color.darkGray);
 
@@ -134,7 +140,7 @@ public class MainFrame extends JFrame implements Runnable {
         panel3.setLayout(new GridLayout(2, 0));
 
         table3 = new Table(board3);
-        table3.setPreferredSize(new Dimension(width / 5, height / 5));
+        table3.setPreferredSize(tableDimension1);
 
         panel3.add(table3);
         panel3.setBackground(Color.darkGray);

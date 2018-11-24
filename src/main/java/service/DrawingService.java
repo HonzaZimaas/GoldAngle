@@ -137,5 +137,11 @@ public class DrawingService {
         this.counter = counter;
     }
 
+    public Color getColor1() {
+        return color1;
+    }
 
+    public Color getColor2() {
+        return color2;
+    }
 }
