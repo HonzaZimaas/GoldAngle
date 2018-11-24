@@ -1,1 +1,1 @@
-# GoldAngle = small school project for random numbers Generators
+# GoldenAngle = small school project for random numbers Generators

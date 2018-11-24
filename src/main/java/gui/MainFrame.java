@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+import static javax.swing.SwingUtilities.invokeLater;
+
 public class MainFrame extends JFrame implements Runnable {
     private int height;
     private int width;
@@ -28,19 +30,19 @@ public class MainFrame extends JFrame implements Runnable {
         this.width = width;
         this.height = height;
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle(title);
         setSize(width, height);
-        setResizable(false);
         setIgnoreRepaint(false);
         setFocusable(true);
+        setResizable(false);
 
-        SwingUtilities.invokeLater(() -> {
-            SwingUtilities.invokeLater(() -> {
-                SwingUtilities.invokeLater(() -> {
-                    SwingUtilities.invokeLater(() -> {
-                        SwingUtilities.invokeLater(() -> {
-                            SwingUtilities.invokeLater(this::initFrame);
+        invokeLater(() -> {
+            invokeLater(() -> {
+                invokeLater(() -> {
+                    invokeLater(() -> {
+                        invokeLater(() -> {
+                            invokeLater(this::initFrame);
                         });
                     });
                 });
@@ -213,7 +215,7 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     private void setIteration() {
-        int count = 0 ;
+        int count = 0;
         try {
             count = Integer.parseInt(fieldCountOfIteration.getText());
         } catch (NumberFormatException ignored) {

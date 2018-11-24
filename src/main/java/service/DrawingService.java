@@ -1,6 +1,9 @@
 package service;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.List;
 
 public class DrawingService {
     private static final int CROSS_SIZE = 10;
@@ -22,6 +25,8 @@ public class DrawingService {
     private Color color2;
 
     private Settings settings;
+    private List<Points> points = new ArrayList<>();
+
 
     private Counter counter = new Counter();
 
@@ -35,9 +40,7 @@ public class DrawingService {
     }
 
     public void userCircle(Graphics2D graphics) {
-
         int diameter = userRadius * 2;
-        int innerRadius = userRadius / 4;
 
         // Circle
         graphics.setColor(Color.gray);
@@ -71,8 +74,12 @@ public class DrawingService {
     }
 
     public void createPoint(Graphics2D graphics, int x, int y) {
-        graphics.setColor(getColorByLocations(x, y));
+        Color colorForBackup = getColorByLocations(x, y);
+        graphics.setColor(colorForBackup);
         graphics.drawRect(x, y, 0, 0);
+
+        points.add(new Points(x - 10, y - 10, colorForBackup));
+
     }
 
     public void cleanEverything(Graphics2D graphics) {
@@ -129,6 +136,20 @@ public class DrawingService {
         }
     }
 
+    public void backupPoints(Graphics2D graphics) {
+        for (Points p : points) {
+            try {
+                graphics.setColor(p.color);
+                graphics.drawRect(p.getX(), p.getY(), 0, 0);
+            } catch (ConcurrentModificationException ignored) {
+            }
+        }
+    }
+
+    public void resetBackupPoints() {
+        points.clear();
+    }
+
     public Counter getCounter() {
         return counter;
     }
@@ -143,5 +164,29 @@ public class DrawingService {
 
     public Color getColor2() {
         return color2;
+    }
+
+    class Points {
+        private int x;
+        private int y;
+        private Color color;
+
+        public Points(int x, int y, Color color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public Color getColor() {
+            return color;
+        }
     }
 }

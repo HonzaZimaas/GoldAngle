@@ -5,6 +5,7 @@ import service.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -35,6 +36,7 @@ public class Board extends JPanel {
 
 
     public void cleanBoard(Graphics graphics) {
+        drawingService.resetBackupPoints();
         createImageInitialImage();
         paint(graphics);
     }
@@ -90,6 +92,8 @@ public class Board extends JPanel {
 
         drawingService.cleanEverything(graphics);
         drawingService.userCircle(graphics);
+
+        drawingService.backupPoints(graphics);
 
         return bufferedImage;
     }
