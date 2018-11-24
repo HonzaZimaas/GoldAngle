@@ -102,7 +102,7 @@ public class Board extends JPanel {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if ((Math.hypot(centerX - i + 10, heightY - j + 10) < settings.getRadius())) {
+                if ((Math.hypot(centerX - i + 10, heightY - j + 10) <= settings.getRadius())) {
                     int[] xy = {i, j};
                     mapOfPointInCircle.put(h, xy);
                     h++;

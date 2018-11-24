@@ -22,7 +22,7 @@ public class MainFrame extends JFrame implements Runnable {
     private JTextField fieldCountOfIteration;
 
     private boolean running = false;
-    private int countOfIteration = 1000000000;
+    private int countOfIteration = 1000000;
 
     public MainFrame(int width, int height, String title) {
         this.width = width;
@@ -50,7 +50,7 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     private void initFrame() {
-        Settings boardsSettings = new Settings(width / 4 -10, height / 2 - 30, 200);
+        Settings boardsSettings = new Settings(width / 4 - 10, height / 2 - 30, 200);
         Dimension dimension = new Dimension(width / 4 - 10, height / 2 - 30);
 
         board = new Board(boardsSettings, GeneratorType.XORSHIFT);
@@ -63,7 +63,7 @@ public class MainFrame extends JFrame implements Runnable {
 
         // menu
         JPanel userPanel = new JPanel();
-        userPanel.setPreferredSize(new Dimension(width / 4 , height / 2));
+        userPanel.setPreferredSize(new Dimension(width / 4, height / 2));
 
 
         LineBorder lineBorder = new LineBorder(Color.darkGray, 10);
@@ -75,11 +75,17 @@ public class MainFrame extends JFrame implements Runnable {
         right.add(new Label());
 
         fieldCountOfIteration = new JTextField();
+        fieldCountOfIteration.setHorizontalAlignment(0);
+        fieldCountOfIteration.setText(Integer.toString(countOfIteration));
         right.add(fieldCountOfIteration);
 
-        JButton countOfIteration = new JButton("Set Iteration level");
+        JButton countOfIteration = new JButton("Set iteration level");
         countOfIteration.addActionListener(e -> setIteration());
         right.add(countOfIteration);
+
+        JButton infinite = new JButton("Infinite iteration level");
+        infinite.addActionListener(e -> setInfinite());
+        right.add(infinite);
 
         right.add(new Label());
 
@@ -159,7 +165,16 @@ public class MainFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        running = !running;
         int iteration = 0;
+
+        try {
+            countOfIteration = Integer.parseInt(fieldCountOfIteration.getText());
+        } catch (NumberFormatException ignored) {
+            setInfinite();
+        }
+
+
         while (running && iteration < countOfIteration) {
             board.paintPoint(board.getGraphics());
             board2.paintPoint(board2.getGraphics());
@@ -171,7 +186,6 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     private void start() {
-        running = !running;
         Thread thread = new Thread(this, "Creating");
         thread.start();
     }
@@ -199,6 +213,18 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     private void setIteration() {
-        countOfIteration = Integer.parseInt(fieldCountOfIteration.getText());
+        int count = 0 ;
+        try {
+            count = Integer.parseInt(fieldCountOfIteration.getText());
+        } catch (NumberFormatException ignored) {
+            fieldCountOfIteration.setText("0");
+        }
+        countOfIteration = count + 100000;
+        fieldCountOfIteration.setText(Integer.toString(countOfIteration));
+    }
+
+    private void setInfinite() {
+        fieldCountOfIteration.setText("Infinity ∞");
+        countOfIteration = (int) Double.POSITIVE_INFINITY;
     }
 }

@@ -12,14 +12,12 @@ class Table extends JPanel {
     private JLabel lvRation;
     private JLabel lvVariance;
 
-    private Color colorA;
-    private Color colorB;
-
 
     Table(Board board) {
         this.board = board;
-        this.colorA = board.getColorA();
-        this.colorB = board.getColorB();
+
+        Color colorA = board.getColorA();
+        Color colorB = board.getColorB();
 
         //LABELS
         setBorder(BorderFactory.createMatteBorder(10, 10, 10, 0, Color.darkGray));
@@ -95,7 +93,7 @@ class Table extends JPanel {
         layout.putConstraint(SpringLayout.NORTH, generatorName, 50, SpringLayout.NORTH, this);
 
         layout.putConstraint(SpringLayout.WEST, countOfPointsA, 50, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, countOfPointsA, 20, SpringLayout.SOUTH, generatorName);
+        layout.putConstraint(SpringLayout.NORTH, countOfPointsA, 30, SpringLayout.SOUTH, generatorName);
 
         layout.putConstraint(SpringLayout.WEST, countOfPointsB, 50, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, countOfPointsB, 20, SpringLayout.SOUTH, countOfPointsA);
@@ -104,7 +102,7 @@ class Table extends JPanel {
         layout.putConstraint(SpringLayout.NORTH, totalPoints, 20, SpringLayout.SOUTH, countOfPointsB);
 
         layout.putConstraint(SpringLayout.WEST, def, 50, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, def, 20, SpringLayout.SOUTH, totalPoints);
+        layout.putConstraint(SpringLayout.NORTH, def, 50, SpringLayout.SOUTH, totalPoints);
 
         layout.putConstraint(SpringLayout.WEST, ration, 50, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, ration, 20, SpringLayout.SOUTH, def);
@@ -115,7 +113,7 @@ class Table extends JPanel {
         //LABELS VALUE POSITION
 
         layout.putConstraint(SpringLayout.WEST, lvCountA, 200, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, lvCountA, 20, SpringLayout.SOUTH, generatorName);
+        layout.putConstraint(SpringLayout.NORTH, lvCountA, 30, SpringLayout.SOUTH, generatorName);
 
         layout.putConstraint(SpringLayout.WEST, lvCountB, 200, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, lvCountB, 20, SpringLayout.SOUTH, lvCountA);
@@ -124,7 +122,7 @@ class Table extends JPanel {
         layout.putConstraint(SpringLayout.NORTH, lvTotal, 20, SpringLayout.SOUTH, lvCountB);
 
         layout.putConstraint(SpringLayout.WEST, lvDef, 200, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.NORTH, lvDef, 20, SpringLayout.SOUTH, lvTotal);
+        layout.putConstraint(SpringLayout.NORTH, lvDef, 50, SpringLayout.SOUTH, lvTotal);
 
         layout.putConstraint(SpringLayout.WEST, lvRation, 200, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.NORTH, lvRation, 20, SpringLayout.SOUTH, lvDef);
