@@ -120,16 +120,16 @@ public class DrawingService {
     private void chooseColorSchema(GeneratorType type) {
         switch (type) {
             case XORSHIFT:
-                color1 = Color.blue;
-                color2 = Color.green;
+                color1 = new Color(0, 0, 255);
+                color2 = new Color(0, 100, 0);
                 break;
             case LCGSHIFT:
-                color1 = Color.magenta;
-                color2 = Color.red;
+                color1 = new Color(255, 0, 0);
+                color2 = new Color(97, 26, 10);
                 break;
             case MT19937:
-                color1 = Color.cyan;
-                color2 = Color.orange;
+                color1 = new Color(255, 140, 0);
+                color2 = new Color(128, 0, 128);
                 break;
             default:
                 throw new IllegalStateException(type.toString());
@@ -140,7 +140,7 @@ public class DrawingService {
         List<Points> backupList = new ArrayList<>(points);
         for (Points p : backupList) {
             try {
-                graphics.setColor(p.color);
+                graphics.setColor(p.getColor());
                 graphics.drawRect(p.getX(), p.getY(), 0, 0);
             } catch (ConcurrentModificationException ignored) {
             }
