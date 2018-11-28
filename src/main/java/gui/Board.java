@@ -5,7 +5,6 @@ import service.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -55,15 +54,27 @@ public class Board extends JPanel {
     }
 
     public String getCountA() {
-        return Integer.toString(drawingService.getCounter().getCountA());
+        if (drawingService.getCounter().getCountA() < 10000) {
+            return Integer.toString(drawingService.getCounter().getCountA());
+        } else {
+            return String.format("%,d", drawingService.getCounter().getCountA());
+        }
     }
 
     public String getCountB() {
-        return Integer.toString(drawingService.getCounter().getCountB());
+        if (drawingService.getCounter().getCountB() < 10000) {
+            return Integer.toString(drawingService.getCounter().getCountB());
+        } else {
+            return String.format("%,d", drawingService.getCounter().getCountB());
+        }
     }
 
     public String getTotal() {
-        return Integer.toString(drawingService.getCounter().getTotal());
+        if (drawingService.getCounter().getTotal() < 10000) {
+            return Integer.toString(drawingService.getCounter().getTotal());
+        } else {
+            return String.format("%,d", drawingService.getCounter().getTotal());
+        }
     }
 
     public String getVariance() {
